@@ -1,17 +1,33 @@
-import BASE_URL from "../constants/constants";
+import constants from "../constants/constants";
 import selectors from "../support/selectors/selectors";
 export default {
-  //general
+  //general////////
   visitPage: () => {
-    cy.visit("https://www.amazon.com");
+    cy.visit(constants.BASE_URL);
+  },
+  regionChange: () => {
+    cy.get(selectors.noRegionChange).click();
   },
 
-  //playstation
+  //playstation////////
   searchPS: () => {
-    cy.get(selectors.searchBar).click().type("playstation{enter}");
+    cy.get(selectors.searchBar)
+      .click()
+      .type(constants.SEARCH_PRODUCT + "{enter}");
   },
 
-  //price filter
+  getLength: () => {
+    cy.get(
+      'div[class*="s-result-list"] div[data-component-type="s-search-result"]'
+    )
+      .then(($el) => {
+        const itemCount = cy.$$($el).length;
+        cy.log(itemCount)
+      })
+      // .then(cy.log(itemCount));
+  },
+
+  //price filter////////
   visitTodaysDeal: () => {
     cy.get(selectors.todaysDeal).click();
   },
@@ -19,5 +35,35 @@ export default {
     cy.get(selectors.sortingBtn).click();
     cy.get(selectors.priceHighLow).click();
   },
-  
+  product1: () => {
+    cy.get(selectors.firstProduct)
+      .invoke("text")
+      .then(cy.log)
+      .then(parseInt)
+      .as("price1");
+  },
+  product2: () => {
+    cy.get(selectors.secondProduct)
+      .invoke("text")
+      .then(cy.log)
+      .then(parseInt)
+      .as("price2");
+  },
+
+  //career page////////
+  visitCareersPage: () => {
+    cy.get(selectors.careersBtn).click();
+  },
+  searchCareer: () => {
+    cy.xpath(selectors.careerSearchBar)
+      .click({ force: true })
+      .type("web developer{enter}");
+  },
+  selectUS: () => {
+    cy.xpath(selectors.selectCountryUS).click();
+  },
+  sortCareerPosts: () => {
+    cy.xpath(selectors.sortByBtn).click();
+    cy.get(selectors.mostRecent).click();
+  },
 };
