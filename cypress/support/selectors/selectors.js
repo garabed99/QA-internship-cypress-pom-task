@@ -6,7 +6,7 @@ export default {
 
   //playstation testing////////
   searchBar: "#twotabsearchtextbox",
-
+  
   //price filter testing////////
   todaysDeal: '[href="/gp/goldbox?ref_=nav_cs_gb"]',
   sortingBtn: ".a-button-text",
